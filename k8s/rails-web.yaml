@@ -1,0 +1,44 @@
+# k8s/rails-web.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails
+  template:
+    metadata:
+      labels:
+        app: rails
+    spec:
+      containers:
+      - name: rails
+        image: a9596/ledger_app:latest
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: password
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rails-secrets
+              key: master_key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rails-service
+spec:
+  type: NodePort
+  selector:
+    app: rails
+  ports:
+    - port: 80
+      targetPort: 80
