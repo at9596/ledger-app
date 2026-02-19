@@ -64,7 +64,7 @@ builder:
 
 accessories:
   db:
-    image: postgres:18
+    image: postgres:16
     host: 127.0.0.1
     port: 5432
     env:
