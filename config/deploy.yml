@@ -5,10 +5,10 @@ ssh:
 
 servers:
   web:
-    - localhost
+    - 127.0.0.1
   job:
     hosts:
-      - localhost
+      - 127.0.0.1
     cmd: bundle exec rake solid_queue:start
 
 # Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
